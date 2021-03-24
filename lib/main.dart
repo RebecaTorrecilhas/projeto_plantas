@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_plantas/addPlanta.dart';
+import 'package:projeto_plantas/plantasList.dart';
 
 void main() {
   runApp(MyApp());
@@ -44,7 +45,13 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Column(
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => PlantasList(),
+                          ));
+                    },
                     child: Text(
                       'Minhas plantas',
                       style: TextStyle(
