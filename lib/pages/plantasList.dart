@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../controllers/plants_controller.dart';
 
 class PlantasList extends StatefulWidget {
   @override
@@ -6,6 +7,14 @@ class PlantasList extends StatefulWidget {
 }
 
 class _PlantasListState extends State<PlantasList> {
+  var controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = PlantsController();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +23,7 @@ class _PlantasListState extends State<PlantasList> {
       ),
       body: ListView.builder(
           shrinkWrap: true,
-          itemCount: 6,
+          itemCount: controller.plantas.length,
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () => {},
@@ -22,12 +31,13 @@ class _PlantasListState extends State<PlantasList> {
                 height: 130,
                 decoration: BoxDecoration(
                   border: Border(bottom: BorderSide(color: Colors.grey)),
+                  color: Colors.grey[200],
                 ),
                 child: Padding(
                   padding: EdgeInsets.all(15),
                   child: Row(
                     children: [
-                      Image.asset('images/038-botanic.png', height: 120),
+                      Image.asset(controller.plantas[index].icon, height: 120),
                       Padding(
                         padding: EdgeInsets.only(left: 30),
                         child: Column(
@@ -35,7 +45,7 @@ class _PlantasListState extends State<PlantasList> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Planta ${index + 1}',
+                              controller.plantas[index].especie,
                               style: TextStyle(
                                 fontSize: 19,
                                 fontWeight: FontWeight.bold,
