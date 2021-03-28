@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_plantas/pages/addPlanta.dart';
+import 'package:projeto_plantas/pages/login.dart';
 import 'package:projeto_plantas/pages/plantasList.dart';
 
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      backgroundColor: Colors.green[50],
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -55,6 +57,25 @@ class Home extends StatelessWidget {
                       minimumSize: Size(350, 50),
                     ),
                   ),
+                  Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 12.0, horizontal: 24.0),
+                      child: InkWell(
+                        child: Text("Sair",
+                            style: TextStyle(
+                              color: Colors.black,
+                              decoration: TextDecoration.underline,
+                              fontSize: 18,
+                            )),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => Login(),
+                            ),
+                          );
+                        },
+                      ))
                 ],
               ),
             ),

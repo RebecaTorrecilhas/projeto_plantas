@@ -31,7 +31,7 @@ class _PlantasListState extends State<PlantasList> {
                 height: 130,
                 decoration: BoxDecoration(
                   border: Border(bottom: BorderSide(color: Colors.grey)),
-                  color: Colors.grey[200],
+                  color: Colors.green[50],
                 ),
                 child: Padding(
                   padding: EdgeInsets.all(15),
