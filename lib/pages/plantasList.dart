@@ -50,7 +50,7 @@ class _PlantasListState extends State<PlantasList> {
                     children: [
                       Image.asset(controller.plantas[index].icon, height: 120),
                       Padding(
-                        padding: EdgeInsets.only(left: 30),
+                        padding: EdgeInsets.only(left: 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -63,7 +63,8 @@ class _PlantasListState extends State<PlantasList> {
                               ),
                             ),
                             Text(
-                              'Tempo de irrigação',
+                              'Irrigar: ' +
+                              controller.plantas[index].irrigacao,
                               style: TextStyle(
                                 fontSize: 16,
                               ),
