@@ -1,0 +1,26 @@
+Alunos: Andre e Rebeca
+
+Atividades desenvolvidas por Andre:
+- Tela com a lista de plantas
+- Tela de visualização de plantas
+- Ícone que possibilita a exclusão da planta 
+- Tela de início
+
+Atividades desenviolvidas por Rebeca:
+- Tela de login
+- Tela de cadastro de usuário
+- Tela de esquecimento de senha
+- Escolha do pacote de icones
+
+Atividades em conjunto:
+- Escolha de fontes, paleta de cores e ícones 
+
+Funcionalidades faltantes:
+
+- Na tela de cadastro de planta (que está incompleta) falta:
+- Select para escolher o tempo de irrigação
+- select para escolher o ícone da planta 
+
+Implementações futuras:
+
+- Incluir foto da planta no cadastro (de modo opcional para o usuário)
