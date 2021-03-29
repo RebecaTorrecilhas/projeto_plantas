@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_plantas/pages/plantasView.dart';
+import '../controllers/plants_controller.dart';
 
 class PlantasList extends StatefulWidget {
   @override
@@ -6,30 +8,75 @@ class PlantasList extends StatefulWidget {
 }
 
 class _PlantasListState extends State<PlantasList> {
+  var controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = PlantsController();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Minhas plantas'),
-        ),
-        body: ListView(
-          padding: EdgeInsets.all(15),
-          children: [
-            Card(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  ListTile(
-                    leading: Image.asset('images/038-botanic.png'),
-                    minVerticalPadding: 30,
-                    title: Text('Sonu Nigam'),
-                    subtitle: Text('Best of Sonu Nigam Song'),
-                    onTap: () => {},
+      appBar: AppBar(
+        title: Text('Minhas plantas'),
+      ),
+      body: ListView.builder(
+          shrinkWrap: true,
+          itemCount: controller.plantas.length,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PlantasView(
+                      key: Key(controller.plantas[index].especie),
+                      planta: controller.plantas[index],
+                    ),
                   ),
-                ],
+                )
+              },
+              child: Container(
+                height: 130,
+                decoration: BoxDecoration(
+                  border: Border(bottom: BorderSide(color: Colors.grey)),
+                  color: Colors.green[50],
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Row(
+                    children: [
+                      Image.asset(controller.plantas[index].icon, height: 120),
+                      Padding(
+                        padding: EdgeInsets.only(left: 30),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              controller.plantas[index].especie,
+                              style: TextStyle(
+                                fontSize: 19,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'Tempo de irrigação',
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ),
-            )
-          ],
-        ));
+            );
+          }),
+    );
   }
 }

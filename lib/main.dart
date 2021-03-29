@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_plantas/pages/home.dart';
+import 'package:projeto_plantas/pages/login.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,9 +11,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Plant Care',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        fontFamily: 'Gotham',
+        primarySwatch: Colors.green
       ),
-      home: Home(),
+      home: Login(),
     );
   }
 }
