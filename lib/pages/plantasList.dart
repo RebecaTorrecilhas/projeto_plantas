@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_plantas/pages/plantasView.dart';
 import '../controllers/plants_controller.dart';
 
 class PlantasList extends StatefulWidget {
@@ -26,7 +27,17 @@ class _PlantasListState extends State<PlantasList> {
           itemCount: controller.plantas.length,
           itemBuilder: (context, index) {
             return GestureDetector(
-              onTap: () => {},
+              onTap: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PlantasView(
+                      key: Key(controller.plantas[index].especie),
+                      planta: controller.plantas[index],
+                    ),
+                  ),
+                )
+              },
               child: Container(
                 height: 130,
                 decoration: BoxDecoration(
