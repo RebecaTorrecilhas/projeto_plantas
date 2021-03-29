@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.projeto_plantas">
    <application
-        android:label="projeto_plantas"
+        android:label="Plant Care"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
