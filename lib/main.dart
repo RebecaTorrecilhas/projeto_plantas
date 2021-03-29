@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Plant Care',
       theme: ThemeData(
+        fontFamily: 'Gotham',
         primarySwatch: Colors.green
       ),
       home: Login(),

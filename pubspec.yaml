@@ -45,13 +45,21 @@ flutter:
   uses-material-design: true
 
   assets: 
-  - images/013-botanic.png
-  - images/015-botanic.png
-  - images/031-botanic.png
-  - images/038-botanic.png
-  - images/042-botanic.png
-  - images/046-botanic.png
-  - images/050-botanic.png
+    - images/013-botanic.png
+    - images/015-botanic.png
+    - images/031-botanic.png
+    - images/038-botanic.png
+    - images/042-botanic.png
+    - images/046-botanic.png
+    - images/050-botanic.png
+  
+  fonts:
+    - family: Gotham
+      fonts:
+        - asset: fonts/gotham.otf
+    - family: Satisfy
+      fonts:
+        - asset: fonts/satisfy.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:

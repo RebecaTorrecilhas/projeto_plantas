@@ -9,6 +9,10 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final _email = TextEditingController();
+  final _senha = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,10 +29,12 @@ class _LoginState extends State<Login> {
             ),
             Container(
               child: Form(
+                key: _formKey,
                 child: Column(children: [
                   Padding(
                     padding: EdgeInsets.all(24),
                     child: TextFormField(
+                        controller: _email,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.mail_outline),
                             border: OutlineInputBorder(),
@@ -44,6 +50,7 @@ class _LoginState extends State<Login> {
                     padding:
                         EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
                     child: TextFormField(
+                        controller: _senha,
                         obscureText: true,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.lock),
@@ -61,12 +68,15 @@ class _LoginState extends State<Login> {
                       margin: EdgeInsets.all(25),
                       child: ElevatedButton(
                         onPressed: () => {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => Home(),
-                            ),
-                          ),
+                          if (_formKey.currentState.validate())
+                            {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => Home(),
+                                ),
+                              ),
+                            }
                         },
                         child: Text(
                           'Entrar',
@@ -97,7 +107,7 @@ class _LoginState extends State<Login> {
                           );
                         },
                       )),
-                      Padding(
+                  Padding(
                       padding: EdgeInsets.symmetric(
                           vertical: 12.0, horizontal: 24.0),
                       child: InkWell(
