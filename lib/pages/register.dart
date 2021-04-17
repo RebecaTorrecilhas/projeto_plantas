@@ -110,7 +110,7 @@ class _Register extends State<Register> {
                           if (value.isEmpty) {
                             return 'Informe a confirmação de senha.';
                           } 
-                          if (value != _senha) {
+                          if (value != _senha.text) {
                             return 'As senhas não são identicas';
                           }
                           return null;
