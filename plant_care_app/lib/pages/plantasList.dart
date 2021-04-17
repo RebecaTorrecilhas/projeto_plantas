@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'addPlanta.dart';
 import 'plantasView.dart';
 import '../controllers/plants_controller.dart';
 
@@ -19,9 +20,29 @@ class _PlantasListState extends State<PlantasList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Minhas plantas'),
-      ),
+      appBar: AppBar(title: Text('Minhas plantas'), actions: [
+        PopupMenuButton(
+          icon: Icon(Icons.more_vert),
+          itemBuilder: (_) => [
+            PopupMenuItem(
+              child: ListTile(
+                leading: Icon(Icons.edit),
+                title: Text('Editar conta'),
+                //  onTap: () =>
+              ),
+            ),
+            PopupMenuItem(
+                child: ListTile(
+              leading: Icon(Icons.exit_to_app),
+              title: Text('Sair'),
+              onTap: () {
+                Navigator.pop(context);
+                // AuthService.to.logout();
+              },
+            )),
+          ],
+        ),
+      ]),
       body: ListView.builder(
           shrinkWrap: true,
           itemCount: controller.plantas.length,
@@ -63,8 +84,7 @@ class _PlantasListState extends State<PlantasList> {
                               ),
                             ),
                             Text(
-                              'Irrigar: ' +
-                              controller.plantas[index].irrigacao,
+                              'Irrigar: ' + controller.plantas[index].irrigacao,
                               style: TextStyle(
                                 fontSize: 16,
                               ),
@@ -78,6 +98,15 @@ class _PlantasListState extends State<PlantasList> {
               ),
             );
           }),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => AddPlanta(),
+                ));
+          },
+          child: const Icon(Icons.add)),
     );
   }
 }

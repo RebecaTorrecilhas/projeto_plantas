@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_plantas/pages/plantasList.dart';
 import 'forgotPassword.dart';
-import 'home.dart';
 import 'register.dart';
 
 class Login extends StatefulWidget {
@@ -43,6 +43,11 @@ class _LoginState extends State<Login> {
                           if (value.isEmpty) {
                             return 'Informe o e-mail.';
                           }
+                          if (!(RegExp(
+                                  r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+                              .hasMatch(value))) {
+                            return 'E-mail inválido.';
+                          }
                           return null;
                         }),
                   ),
@@ -70,10 +75,10 @@ class _LoginState extends State<Login> {
                         onPressed: () => {
                           if (_formKey.currentState.validate())
                             {
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (_) => Home(),
+                                  builder: (_) => PlantasList(),
                                 ),
                               ),
                             }

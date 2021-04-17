@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
+import 'package:projeto_plantas/pages/plantasList.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -73,6 +73,11 @@ class _Register extends State<Register> {
                           if (value.isEmpty) {
                             return 'Informe o e-mail.';
                           }
+                          if (!(RegExp(
+                                  r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+                              .hasMatch(value))) {
+                            return 'E-mail inválido.';
+                          }
                           return null;
                         }),
                   ),
@@ -125,7 +130,7 @@ class _Register extends State<Register> {
                             {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (_) => Home()),
+                                MaterialPageRoute(builder: (_) => PlantasList()),
                               ),
                             }
                         },
