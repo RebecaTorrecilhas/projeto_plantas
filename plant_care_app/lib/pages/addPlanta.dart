@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:select_form_field/select_form_field.dart';
 
 class AddPlanta extends StatefulWidget {
   @override
@@ -10,8 +9,8 @@ class _AddPlantaState extends State<AddPlanta> {
 
   final _especie = TextEditingController();
   final _observacao = TextEditingController();
-  final _irrigacao = TextEditingController();
-  final _icon = TextEditingController();
+  //final _irrigacao = TextEditingController();
+  //final _icon = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 

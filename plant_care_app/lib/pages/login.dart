@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_plantas/pages/plantasList.dart';
+import '../pages/plantasList.dart';
 import 'forgotPassword.dart';
 import 'register.dart';
 
@@ -16,7 +16,6 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green[50],
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[

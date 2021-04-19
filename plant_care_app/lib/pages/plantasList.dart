@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'addPlanta.dart';
 import 'plantasView.dart';
+import '../controllers/theme_controller.dart';
 import '../controllers/plants_controller.dart';
 
 class PlantasList extends StatefulWidget {
@@ -9,12 +11,12 @@ class PlantasList extends StatefulWidget {
 }
 
 class _PlantasListState extends State<PlantasList> {
-  var controller;
-
+  var controller = ThemeController.to;
+  var  repositorio = PlantsController();
+  
   @override
   void initState() {
     super.initState();
-    controller = PlantsController();
   }
 
   @override
@@ -32,20 +34,31 @@ class _PlantasListState extends State<PlantasList> {
               ),
             ),
             PopupMenuItem(
-                child: ListTile(
-              leading: Icon(Icons.exit_to_app),
-              title: Text('Sair'),
-              onTap: () {
-                Navigator.pop(context);
-                // AuthService.to.logout();
-              },
-            )),
+              child: ListTile(
+                leading: Obx(() => controller.isDark.value
+                    ? Icon(Icons.brightness_5)
+                    : Icon(Icons.brightness_2_outlined)),
+                title: Obx(() =>
+                    controller.isDark.value ? Text('Light') : Text('Dark')),
+                onTap: () => controller.changeTheme(),
+              ),
+            ),
+            PopupMenuItem(
+              child: ListTile(
+                leading: Icon(Icons.exit_to_app),
+                title: Text('Sair'),
+                onTap: () {
+                  Navigator.pop(context);
+                  // AuthService.to.logout();
+                },
+              ),
+            ),
           ],
         ),
       ]),
       body: ListView.builder(
           shrinkWrap: true,
-          itemCount: controller.plantas.length,
+          itemCount: repositorio.plantas.length,
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () => {
@@ -53,8 +66,8 @@ class _PlantasListState extends State<PlantasList> {
                   context,
                   MaterialPageRoute(
                     builder: (_) => PlantasView(
-                      key: Key(controller.plantas[index].especie),
-                      planta: controller.plantas[index],
+                      key: Key(repositorio.plantas[index].especie),
+                      planta: repositorio.plantas[index],
                     ),
                   ),
                 )
@@ -63,13 +76,12 @@ class _PlantasListState extends State<PlantasList> {
                 height: 130,
                 decoration: BoxDecoration(
                   border: Border(bottom: BorderSide(color: Colors.grey)),
-                  color: Colors.green[50],
                 ),
                 child: Padding(
                   padding: EdgeInsets.all(15),
                   child: Row(
                     children: [
-                      Image.asset(controller.plantas[index].icon, height: 120),
+                      Image.asset(repositorio.plantas[index].icon, height: 120),
                       Padding(
                         padding: EdgeInsets.only(left: 20),
                         child: Column(
@@ -77,14 +89,15 @@ class _PlantasListState extends State<PlantasList> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              controller.plantas[index].especie,
+                              repositorio.plantas[index].especie,
                               style: TextStyle(
                                 fontSize: 19,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
-                              'Irrigar: ' + controller.plantas[index].irrigacao,
+                              'Irrigar: ' +
+                                  repositorio.plantas[index].irrigacao,
                               style: TextStyle(
                                 fontSize: 16,
                               ),
