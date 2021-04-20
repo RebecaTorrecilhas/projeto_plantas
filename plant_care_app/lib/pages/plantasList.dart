@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:projeto_plantas/services/auth_service.dart';
 import 'addPlanta.dart';
 import 'plantasView.dart';
 import '../controllers/theme_controller.dart';
@@ -49,7 +50,7 @@ class _PlantasListState extends State<PlantasList> {
                 title: Text('Sair'),
                 onTap: () {
                   Navigator.pop(context);
-                  // AuthService.to.logout();
+                  AuthService.to.logout();
                 },
               ),
             ),

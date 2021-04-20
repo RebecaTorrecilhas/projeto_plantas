@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:projeto_plantas/widgets/checkAuth.dart';
 import 'controllers/theme_controller.dart';
-import 'pages/login.dart';
+import 'services/auth_service.dart';
 
 void main() {
   Get.lazyPut<ThemeController>(() => ThemeController());
+  Get.lazyPut<AuthService>(() => AuthService());
 
   runApp(MyApp());
 }
@@ -13,6 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeController.to.loadThemeMode();
+    AuthService.to.loadToken();
 
     return GetMaterialApp(
       title: 'Plant Care',
@@ -37,7 +40,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       themeMode: ThemeMode.system,
-      home: Login(),
+      home: CheckAuth(),
     );
   }
 }
