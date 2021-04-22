@@ -1,6 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class AuthService extends GetxController {
   var userIsAuthenticated = false.obs;
@@ -38,7 +42,21 @@ class AuthService extends GetxController {
 
   login(String email, String password) async {
     try {
-      // to do
+     var response = await http.get(
+        Uri.parse('https://api.api-futebol.com.br/v1/campeonatos/10/fases/55'),
+        headers: {
+          HttpHeaders.authorizationHeader:
+              "Bearer live_48465c36f634da7be9d75067b2eb27"
+        }, );
+
+        if(response.statusCode == 200){
+          var data = jsonDecode(response.body);
+
+          token.value = data.token;
+          userIsAuthenticated.value = true;
+        } else{
+
+        }
     } catch (e) {
       // validar erro
     }
@@ -46,7 +64,13 @@ class AuthService extends GetxController {
 
   forgot(String email) async {
     try {
-      // to do
+       var response = await http.get(
+        Uri.parse('https://api.api-futebol.com.br/v1/campeonatos/10/fases/55'),
+        headers: {
+          HttpHeaders.authorizationHeader:
+              "Bearer live_48465c36f634da7be9d75067b2eb27"
+        },
+   );
     } catch (e) {
       // validar erro
     }
