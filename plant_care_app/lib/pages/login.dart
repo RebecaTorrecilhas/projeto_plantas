@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:projeto_plantas/services/auth_service.dart';
 import 'forgotPassword.dart';
@@ -76,9 +78,13 @@ class _LoginState extends State<Login> {
                           alignment: Alignment.bottomCenter,
                           margin: EdgeInsets.all(25),
                           child: ElevatedButton(
-                            onPressed: () => {
+                            onPressed: () async  => {
                               if (_formKey.currentState.validate())
-                                {AuthService.to.login(_email.text, _senha.text)}
+                                {
+                                  isLoading.value = true,
+                                  await AuthService.to.login(_email.text, _senha.text),
+                                  isLoading.value = false  
+                                }
                             },
                             child: Text(
                               'Entrar',

@@ -13,8 +13,9 @@ class PlantasList extends StatefulWidget {
 
 class _PlantasListState extends State<PlantasList> {
   var controller = ThemeController.to;
-  var  repositorio = PlantsController();
-  
+  var repositorio = PlantsController();
+  final isLoading = false.obs;
+
   @override
   void initState() {
     super.initState();
@@ -48,70 +49,78 @@ class _PlantasListState extends State<PlantasList> {
               child: ListTile(
                 leading: Icon(Icons.exit_to_app),
                 title: Text('Sair'),
-                onTap: () {
+                onTap: () async  {
+                  isLoading.value = true;
                   Navigator.pop(context);
-                  AuthService.to.logout();
+                  await AuthService.to.logout();
+                  isLoading.value = false;
                 },
               ),
             ),
           ],
         ),
       ]),
-      body: ListView.builder(
-          shrinkWrap: true,
-          itemCount: repositorio.plantas.length,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => PlantasView(
-                      key: Key(repositorio.plantas[index].especie),
-                      planta: repositorio.plantas[index],
-                    ),
-                  ),
-                )
-              },
-              child: Container(
-                height: 130,
-                decoration: BoxDecoration(
-                  border: Border(bottom: BorderSide(color: Colors.grey)),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(15),
-                  child: Row(
-                    children: [
-                      Image.asset(repositorio.plantas[index].icon, height: 120),
-                      Padding(
-                        padding: EdgeInsets.only(left: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
+      body: Obx(
+        () => isLoading.value
+            ? Center(child: CircularProgressIndicator())
+            : ListView.builder(
+                shrinkWrap: true,
+                itemCount: repositorio.plantas.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => PlantasView(
+                            key: Key(repositorio.plantas[index].especie),
+                            planta: repositorio.plantas[index],
+                          ),
+                        ),
+                      )
+                    },
+                    child: Container(
+                      height: 130,
+                      decoration: BoxDecoration(
+                        border: Border(bottom: BorderSide(color: Colors.grey)),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Row(
                           children: [
-                            Text(
-                              repositorio.plantas[index].especie,
-                              style: TextStyle(
-                                fontSize: 19,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              'Irrigar: ' +
-                                  repositorio.plantas[index].irrigacao,
-                              style: TextStyle(
-                                fontSize: 16,
+                            Image.asset(repositorio.plantas[index].icon,
+                                height: 120),
+                            Padding(
+                              padding: EdgeInsets.only(left: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    repositorio.plantas[index].especie,
+                                    style: TextStyle(
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Irrigar: ' +
+                                        repositorio.plantas[index].irrigacao,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  )
+                                ],
                               ),
                             )
                           ],
                         ),
-                      )
-                    ],
-                  ),
-                ),
+                      ),
+                    ),
+                  );
+                },
               ),
-            );
-          }),
+      ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(
