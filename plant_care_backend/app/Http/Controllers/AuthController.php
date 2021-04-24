@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Auth\ResetPasswordController;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -43,10 +44,6 @@ class AuthController extends Controller {
         $token = $user->createToken('user')->plainTextToken;
 
         return response()->json(['token' => $token]);
-    }
-
-    public function forgot(Request $request) {
-        echo  'teste routas';
     }
 
     public function logout(Request $request) {

@@ -1,13 +1,14 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register', [AuthController::class, 'register']);
-    Route::post('forgot', [AuthController::class, 'forgot']);
+    Route::post('forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
