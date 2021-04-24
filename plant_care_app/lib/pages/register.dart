@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:projeto_plantas/pages/plantasList.dart';
 import 'package:projeto_plantas/services/auth_service.dart';
 
 class Register extends StatefulWidget {
@@ -142,12 +141,6 @@ class _Register extends State<Register> {
                                           _nome.text, _email.text, _senha.text))
                                         {
                                           Navigator.pop(context),
-                                          Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (_) => PlantasList(),
-                                            ),
-                                          )
                                         },
                                       isLoading.value = false,
                                     }
