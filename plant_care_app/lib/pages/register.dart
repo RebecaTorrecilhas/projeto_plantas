@@ -141,6 +141,16 @@ class _Register extends State<Register> {
                                           _nome.text, _email.text, _senha.text))
                                         {
                                           Navigator.pop(context),
+                                        }
+                                      else
+                                        {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                  'Não foi possível cadastrar.'),
+                                            ),
+                                          ),
                                         },
                                       isLoading.value = false,
                                     }

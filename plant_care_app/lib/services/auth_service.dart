@@ -83,7 +83,7 @@ class AuthService extends GetxController {
         token.value = data['token'];
         userIsAuthenticated.value = true;
       } else {
-        // retornar um erro ao autenticar
+        return false;
       }
     } catch (e) {
       print(e.message);
@@ -106,9 +106,9 @@ class AuthService extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        // ok
+        return true;
       } else {
-        //nenhum email cadastrado
+        return false;
       }
     } catch (e) {
       print(e.message);

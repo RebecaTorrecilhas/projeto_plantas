@@ -80,7 +80,14 @@ class _LoginState extends State<Login> {
                               if (_formKey.currentState.validate())
                                 {
                                   isLoading.value = true,
-                                  await AuthService.to.login(_email.text, _senha.text),
+                                  if (!(await AuthService.to.login(_email.text, _senha.text))){
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content:
+                                            Text('Não foi possível realizar login.'),
+                                      ),
+                                    ),
+                                  },
                                   isLoading.value = false  
                                 }
                             },
