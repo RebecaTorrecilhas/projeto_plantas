@@ -45,7 +45,7 @@ class AuthService extends GetxController {
           },
         ),
       );
-      print(response.statusCode);
+      
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
 

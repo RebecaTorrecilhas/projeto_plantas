@@ -5,6 +5,7 @@ import 'addPlanta.dart';
 import 'plantasView.dart';
 import '../controllers/theme_controller.dart';
 import '../controllers/plants_controller.dart';
+import 'editUser.dart';
 
 class PlantasList extends StatefulWidget {
   @override
@@ -30,10 +31,13 @@ class _PlantasListState extends State<PlantasList> {
           itemBuilder: (_) => [
             PopupMenuItem(
               child: ListTile(
-                leading: Icon(Icons.edit),
-                title: Text('Editar conta'),
-                //  onTap: () =>
-              ),
+                  leading: Icon(Icons.edit),
+                  title: Text('Editar conta'),
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => EditUser(),
+                      ))),
             ),
             PopupMenuItem(
               child: ListTile(
@@ -49,7 +53,7 @@ class _PlantasListState extends State<PlantasList> {
               child: ListTile(
                 leading: Icon(Icons.exit_to_app),
                 title: Text('Sair'),
-                onTap: () async  {
+                onTap: () async {
                   isLoading.value = true;
                   Navigator.pop(context);
                   await AuthService.to.logout();
