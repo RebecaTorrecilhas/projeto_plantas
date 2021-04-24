@@ -29,11 +29,35 @@ class AuthService extends GetxController {
     token = token;
   }
 
-  register(String nome, String email, String password) async {
+  register(String nome, String email, String senha) async {
     try {
-      // to do
+      var response = await http.post(
+        Uri.parse('http://192.168.1.14:8000/api/auth/register'),
+        headers: <String, String>{
+          'Accept': 'application/json;',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+          <String, String>{
+            "nome": nome,
+            "email": email,
+            "senha": senha,
+          },
+        ),
+      );
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+
+        token.value = data['token'];
+        userIsAuthenticated.value = true;
+
+        return true;
+      } else {
+        return false;
+      }
     } catch (e) {
-      // validar erro
+      print(e.message);
     }
   }
 
@@ -98,7 +122,7 @@ class AuthService extends GetxController {
         headers: <String, String>{
           'Accept': 'application/json;',
           'Content-Type': 'application/json; charset=UTF-8',
-           'Authorization': 'Bearer $token',
+          'Authorization': 'Bearer $token',
         },
       );
 

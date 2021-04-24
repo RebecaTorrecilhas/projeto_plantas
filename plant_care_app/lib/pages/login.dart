@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:projeto_plantas/services/auth_service.dart';
 import 'forgotPassword.dart';
