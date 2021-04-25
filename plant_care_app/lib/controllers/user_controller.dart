@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:projeto_plantas/services/auth_service.dart';
 import 'package:projeto_plantas/services/user_service.dart';
 
 class UserController extends GetxController {
@@ -15,6 +16,10 @@ class UserController extends GetxController {
   onInit() {
     super.onInit();
     getUser();
+    ever(AuthService.to.token, (token) {
+      getUser();
+      formKey.currentState.reset();
+    });
   }
 
   getUser() async {

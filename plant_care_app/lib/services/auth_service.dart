@@ -23,10 +23,10 @@ class AuthService extends GetxController {
     setToken(token);
   }
 
-  Future setToken(String token) async {
+  Future setToken(String tokenNew) async {
     prefs = await SharedPreferences.getInstance();
-    await prefs.setString('token', token);
-    token = token;
+    await prefs.setString('token', tokenNew);
+    token.value = tokenNew;
   }
 
   register(String nome, String email, String senha) async {
@@ -49,7 +49,7 @@ class AuthService extends GetxController {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
 
-        token.value = data['token'];
+        setToken(data['token']);
         userIsAuthenticated.value = true;
 
         return true;
@@ -80,13 +80,13 @@ class AuthService extends GetxController {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
 
-        token.value = data['token'];
+        setToken(data['token']);
         userIsAuthenticated.value = true;
       } else {
         return false;
       }
     } catch (e) {
-      print(e.message);
+      print(e);
     }
   }
 
