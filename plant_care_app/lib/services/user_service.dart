@@ -13,12 +13,14 @@ class UserService extends GetxController {
 
   getUser() async {
     try {
+      var token = AuthService.to.token;
+
       var response = await http.get(
         Uri.parse('http://192.168.1.14:8000/api/user'),
         headers: <String, String>{
           'Accept': 'application/json;',
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer $AuthService.to.token',
+          'Authorization': 'Bearer $token',
         },
       );
 
@@ -34,12 +36,14 @@ class UserService extends GetxController {
 
   editUser(String nome, String email, String senha) async {
     try {
-      var response = await http.post(
+      var token = AuthService.to.token;
+
+      var response = await http.put(
         Uri.parse('http://192.168.1.14:8000/api/user'),
         headers: <String, String>{
           'Accept': 'application/json;',
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer $AuthService.to.token',
+          'Authorization': 'Bearer $token',
         },
         body: jsonEncode(
           <String, String>{
@@ -51,12 +55,11 @@ class UserService extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        var data = jsonDecode(response.body);
-
-        if (data.errors) {
+        if (response.body.isEmpty) {
+          return true;
+        } else {
           return false;
         }
-        return true;
       } else {
         return false;
       }

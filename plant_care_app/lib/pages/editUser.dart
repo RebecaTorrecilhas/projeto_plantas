@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:projeto_plantas/services/auth_service.dart';
+import 'package:projeto_plantas/controllers/user_controller.dart';
 
 class EditUser extends StatefulWidget {
   @override
@@ -8,14 +8,7 @@ class EditUser extends StatefulWidget {
 }
 
 class _EditUser extends State<EditUser> {
-  final _nome = TextEditingController();
-  final _email = TextEditingController();
-  final _senha = TextEditingController();
-  final _confirm = TextEditingController();
-
-  var isLoading = false.obs;
-
-  final _formKey = GlobalKey<FormState>();
+  var controller = Get.put(UserController());
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +18,7 @@ class _EditUser extends State<EditUser> {
       ),
       backgroundColor: Colors.green[50],
       body: Obx(
-        () => isLoading.value
+        () => controller.isLoading.value
             ? Center(
                 child: CircularProgressIndicator(),
               )
@@ -42,13 +35,13 @@ class _EditUser extends State<EditUser> {
                         )),
                     Container(
                       child: Form(
-                        key: _formKey,
+                        key: controller.formKey,
                         child: Column(children: [
                           Padding(
                             padding: EdgeInsets.symmetric(
                                 vertical: 12.0, horizontal: 24.0),
                             child: TextFormField(
-                                controller: _nome,
+                                controller: controller.nome,
                                 decoration: InputDecoration(
                                     prefixIcon: Icon(Icons.people),
                                     border: OutlineInputBorder(),
@@ -64,7 +57,7 @@ class _EditUser extends State<EditUser> {
                             padding: EdgeInsets.symmetric(
                                 vertical: 12.0, horizontal: 24.0),
                             child: TextFormField(
-                                controller: _email,
+                                controller: controller.email,
                                 decoration: InputDecoration(
                                     prefixIcon: Icon(Icons.mail_outline),
                                     border: OutlineInputBorder(),
@@ -85,17 +78,14 @@ class _EditUser extends State<EditUser> {
                             padding: EdgeInsets.symmetric(
                                 vertical: 12.0, horizontal: 24.0),
                             child: TextFormField(
-                                controller: _senha,
+                                controller: controller.senha,
                                 obscureText: true,
                                 decoration: InputDecoration(
                                     prefixIcon: Icon(Icons.lock),
                                     border: OutlineInputBorder(),
                                     labelText: 'Editar senha'),
                                 validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'Informe a nova senha.';
-                                  }
-                                  if (value.length < 6) {
+                                  if (value.isNotEmpty && value.length < 6) {
                                     return 'A senha deve conter no mínimo 6 caracteres.';
                                   }
                                   return null;
@@ -105,17 +95,15 @@ class _EditUser extends State<EditUser> {
                             padding: EdgeInsets.symmetric(
                                 vertical: 12.0, horizontal: 24.0),
                             child: TextFormField(
-                                controller: _confirm,
+                                controller: controller.confirm,
                                 obscureText: true,
                                 decoration: InputDecoration(
                                     prefixIcon: Icon(Icons.lock),
                                     border: OutlineInputBorder(),
                                     labelText: 'Confirme sua nova senha'),
                                 validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'Informe a confirmação de senha.';
-                                  }
-                                  if (value != _senha.text) {
+                                  if (value.isNotEmpty &&
+                                      value != controller.senha.text) {
                                     return 'As senhas não são identicas';
                                   }
                                   return null;
@@ -126,13 +114,19 @@ class _EditUser extends State<EditUser> {
                               margin: EdgeInsets.all(25),
                               child: ElevatedButton(
                                 onPressed: () async => {
-                                  if (_formKey.currentState.validate())
+                                  if (controller.formKey.currentState
+                                      .validate())
                                     {
-                                      isLoading.value = true,
-                                      if (await AuthService.to.register(
-                                          _nome.text, _email.text, _senha.text))
+                                      if (await controller.editUser())
                                         {
-                                          Navigator.pop(context),
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                  'Informações alteradas com sucesso!'),
+                                            ),
+                                          ),
+                                          Navigator.pop(context)
                                         }
                                       else
                                         {
@@ -143,8 +137,7 @@ class _EditUser extends State<EditUser> {
                                                   'Não foi possível alterar as informações.'),
                                             ),
                                           ),
-                                        },
-                                      isLoading.value = false,
+                                        }
                                     }
                                 },
                                 child: Text(

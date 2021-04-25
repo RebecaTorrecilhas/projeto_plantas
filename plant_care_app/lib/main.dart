@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:projeto_plantas/services/user_service.dart';
 import 'package:projeto_plantas/widgets/checkAuth.dart';
 import 'controllers/theme_controller.dart';
 import 'services/auth_service.dart';
+import 'services/user_service.dart';
 
 void main() {
   Get.lazyPut<ThemeController>(() => ThemeController());
   Get.lazyPut<AuthService>(() => AuthService());
+  Get.lazyPut<UserService>(() => UserService());
 
   runApp(MyApp());
 }

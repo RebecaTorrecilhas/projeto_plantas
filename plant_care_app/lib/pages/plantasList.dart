@@ -33,11 +33,15 @@ class _PlantasListState extends State<PlantasList> {
               child: ListTile(
                   leading: Icon(Icons.edit),
                   title: Text('Editar conta'),
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => EditUser(),
-                      ))),
+                  onTap: () => {
+                        Navigator.pop(context),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditUser(),
+                          ),
+                        ),
+                      }),
             ),
             PopupMenuItem(
               child: ListTile(

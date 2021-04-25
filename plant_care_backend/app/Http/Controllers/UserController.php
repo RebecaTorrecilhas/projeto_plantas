@@ -15,8 +15,7 @@ class UserController extends Controller {
     public function edit(Request $request) {
         $request->validate([
             "nome" => "required|min:3",
-            "email" => "required|email",
-            "senha" => "min:6"
+            "email" => "required|email"
         ]);
 
         $user = User::find($request->user()->id);
@@ -24,7 +23,7 @@ class UserController extends Controller {
         $user->name = $request->nome;
         $user->email = $request->email;
 
-        if (isset($request->senha)) {
+        if (isset($request->senha) && $request->senha != '') {
             $user->password = bcrypt($request->senha);
         }
 
