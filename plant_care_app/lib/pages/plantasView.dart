@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import '../models/plant.dart';
 
 class PlantasView extends StatefulWidget {
-  Plant planta;
+  final planta;
   PlantasView({Key key, this.planta}) : super(key: key);
 
   @override
@@ -41,7 +40,7 @@ class _PlantasViewState extends State<PlantasView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.planta.especie,
+          widget.planta['especie'],
         ),
         actions: [
           IconButton(icon: Icon(Icons.delete), onPressed: () => deletePlanta(context)),
@@ -53,7 +52,7 @@ class _PlantasViewState extends State<PlantasView> {
           children: [
             Center(
               child: Image.asset(
-                widget.planta.icon,
+                widget.planta['icon'],
                 height: 180,
               ),
             ),
@@ -68,7 +67,7 @@ class _PlantasViewState extends State<PlantasView> {
             Padding(
               padding: EdgeInsets.all(0),
               child: Text(
-                widget.planta.obs,
+                widget.planta['obs'],
                 textAlign: TextAlign.justify,
                 style: TextStyle(fontSize: 18),
               ),
@@ -84,7 +83,7 @@ class _PlantasViewState extends State<PlantasView> {
             Padding(
               padding: EdgeInsets.all(0),
               child: Text(
-                widget.planta.irrigacao,
+                widget.planta['irrigar'],
                 textAlign: TextAlign.justify,
                 style: TextStyle(fontSize: 18),
               ),

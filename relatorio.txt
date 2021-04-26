@@ -1,5 +1,27 @@
 Alunos: Andre e Rebeca
 
+Segunda parte do projeto:
+
+Atividades desenvolvidas por Andre:
+- Login (autenticação)
+- Cadastro
+- Logout 
+- Esqueceu senha 
+- Editar usuário
+
+Atividades desenviolvidas por Rebeca:
+- Remoção da home
+- Implementação do botão flutuante para adicioanar nova planta
+- Regex de validação de email para registrar e logar
+- Opções no appBar na listagem de plantas
+- Opção de tema escuro ou claro
+- Cadastrar planta
+- Listar plantas
+
+--------------------------------------------------------------------------------
+
+Primeira parte do projeto:
+
 Atividades desenvolvidas por Andre:
 - Tela com a lista de plantas
 - Tela de visualização de plantas
@@ -24,3 +46,4 @@ Funcionalidades faltantes:
 Implementações futuras:
 
 - Incluir foto da planta no cadastro (de modo opcional para o usuário)
+
