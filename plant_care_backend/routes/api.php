@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('plant')->group(function () {
         Route::get('/all', [PlantController::class, 'getAll']);
         Route::get('/{id}', [PlantController::class, 'get']);
+        Route::post('/',  [PlantController::class, 'add']);
         Route::put('/{id}', [PlantController::class, 'edit']);
         Route::delete('/{id}', [PlantController::class, 'destroy']);
     });
