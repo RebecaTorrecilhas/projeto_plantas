@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_plantas/constants.dart';
 import 'package:get/get.dart';
+import '../controllers/plants_controller.dart';
 
 class AddPlanta extends StatefulWidget {
   @override
@@ -8,15 +9,9 @@ class AddPlanta extends StatefulWidget {
 }
 
 class _AddPlantaState extends State<AddPlanta> {
-  final _especie = TextEditingController();
-  final _observacao = TextEditingController();
-  final _irrigacao = TextEditingController();
-  final _icon = TextEditingController();
-
   var icone = '';
-
-  final _formKey = GlobalKey<FormState>();
   var constants = Get.put(Constants());
+  var controller = Get.put(PlantsController());
 
   showEscolherIcon() {
     List<SimpleDialogOption> items = [];
@@ -32,7 +27,7 @@ class _AddPlantaState extends State<AddPlanta> {
             ),
           ),
           onPressed: () {
-            _icon.text = imagem;
+            controller.icon.text = imagem;
             setState(() {
               icone = imagem;
             });
@@ -62,7 +57,7 @@ class _AddPlantaState extends State<AddPlanta> {
             children: <Widget>[
               Container(
                 child: Form(
-                  key: _formKey,
+                  key: controller.formKey,
                   child: Column(children: [
                     GestureDetector(
                       onTap: () => showEscolherIcon(),
@@ -94,7 +89,7 @@ class _AddPlantaState extends State<AddPlanta> {
                       padding: EdgeInsets.symmetric(
                           vertical: 12.0, horizontal: 24.0),
                       child: TextFormField(
-                        controller: _especie,
+                        controller: controller.especie,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.eco),
                             border: OutlineInputBorder(),
@@ -111,7 +106,7 @@ class _AddPlantaState extends State<AddPlanta> {
                       padding: EdgeInsets.symmetric(
                           vertical: 12.0, horizontal: 24.0),
                       child: TextFormField(
-                          controller: _irrigacao,
+                          controller: controller.irrigar,
                           decoration: InputDecoration(
                               prefixIcon: Icon(Icons.opacity),
                               border: OutlineInputBorder(),
@@ -129,7 +124,7 @@ class _AddPlantaState extends State<AddPlanta> {
                       child: TextFormField(
                           minLines: 2,
                           maxLines: 6,
-                          controller: _observacao,
+                          controller: controller.obs,
                           decoration: InputDecoration(
                               prefixIcon: Icon(Icons.article),
                               border: OutlineInputBorder(),
@@ -145,7 +140,30 @@ class _AddPlantaState extends State<AddPlanta> {
                       alignment: Alignment.bottomCenter,
                       margin: EdgeInsets.all(25),
                       child: ElevatedButton(
-                        onPressed: () => {},
+                        onPressed: () async => {
+                          if (controller.formKey.currentState.validate())
+                            {
+                              if (await controller.add())
+                                {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                          'Planta adicionada com sucesso!'),
+                                    ),
+                                  ),
+                                  Navigator.pop(context)
+                                }
+                              else
+                                {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                          'Não foi possível adicionar a planta.'),
+                                    ),
+                                  ),
+                                }
+                            }
+                        },
                         child: Text(
                           'Salvar',
                           style: TextStyle(

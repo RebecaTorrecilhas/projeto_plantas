@@ -13,8 +13,8 @@ class PlantasList extends StatefulWidget {
 }
 
 class _PlantasListState extends State<PlantasList> {
-  var controller = ThemeController.to;
-  var repositorio = PlantsController();
+  var themeController = ThemeController.to;
+  var controller = Get.put(PlantsController());
   final isLoading = false.obs;
 
   @override
@@ -45,12 +45,13 @@ class _PlantasListState extends State<PlantasList> {
             ),
             PopupMenuItem(
               child: ListTile(
-                leading: Obx(() => controller.isDark.value
+                leading: Obx(() => themeController.isDark.value
                     ? Icon(Icons.brightness_5)
                     : Icon(Icons.brightness_2_outlined)),
-                title: Obx(() =>
-                    controller.isDark.value ? Text('Light') : Text('Dark')),
-                onTap: () => controller.changeTheme(),
+                title: Obx(() => themeController.isDark.value
+                    ? Text('Light')
+                    : Text('Dark')),
+                onTap: () => themeController.changeTheme(),
               ),
             ),
             PopupMenuItem(
@@ -69,65 +70,74 @@ class _PlantasListState extends State<PlantasList> {
         ),
       ]),
       body: Obx(
-        () => isLoading.value
+        () => controller.isLoading.value
             ? Center(child: CircularProgressIndicator())
-            : ListView.builder(
-                shrinkWrap: true,
-                itemCount: repositorio.plantas.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => PlantasView(
-                            key: Key(repositorio.plantas[index].especie),
-                            planta: repositorio.plantas[index],
+            : controller.plantas.length == 0
+                ? Center(
+                    child: Text(
+                    'Não há plantinhas cadastradas :( ',
+                    style: TextStyle(fontSize: 20),
+                  ))
+                : ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: controller.plantas.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => PlantasView(
+                                key: Key(controller.plantas[index]['especie']),
+                                planta: controller.plantas[index],
+                              ),
+                            ),
+                          )
+                        },
+                        child: Container(
+                          height: 130,
+                          decoration: BoxDecoration(
+                            border:
+                                Border(bottom: BorderSide(color: Colors.grey)),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(15),
+                            child: Row(
+                              children: [
+                                Image.asset(controller.plantas[index]['icon'],
+                                    height: 120),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 20),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        controller.plantas[index]['especie'],
+                                        style: TextStyle(
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Irrigar: ' +
+                                            controller.plantas[index]
+                                                ['irrigar'],
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      )
+                      );
                     },
-                    child: Container(
-                      height: 130,
-                      decoration: BoxDecoration(
-                        border: Border(bottom: BorderSide(color: Colors.grey)),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(15),
-                        child: Row(
-                          children: [
-                            Image.asset(repositorio.plantas[index].icon,
-                                height: 120),
-                            Padding(
-                              padding: EdgeInsets.only(left: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    repositorio.plantas[index].especie,
-                                    style: TextStyle(
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Irrigar: ' +
-                                        repositorio.plantas[index].irrigacao,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
+                  ),
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {

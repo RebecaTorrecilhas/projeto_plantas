@@ -129,7 +129,7 @@ class AuthService extends GetxController {
       if (response.statusCode == 200) {
         setToken('');
         userIsAuthenticated.value = false;
-      }
+     }
     } catch (e) {
       print(e.message);
     }

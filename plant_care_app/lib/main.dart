@@ -5,11 +5,13 @@ import 'package:projeto_plantas/widgets/checkAuth.dart';
 import 'controllers/theme_controller.dart';
 import 'services/auth_service.dart';
 import 'services/user_service.dart';
+import 'services/plants_service.dart';
 
 void main() {
   Get.lazyPut<ThemeController>(() => ThemeController());
   Get.lazyPut<AuthService>(() => AuthService());
   Get.lazyPut<UserService>(() => UserService());
+  Get.lazyPut<PlantsService>(() => PlantsService());
 
   runApp(MyApp());
 }
