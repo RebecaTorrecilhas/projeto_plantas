@@ -17,7 +17,6 @@ class _ForgotPassword extends State<ForgotPassword> {
       appBar: AppBar(
         title: Text('Esqueceu a senha'),
       ),
-      backgroundColor: Colors.green[50],
       body: Obx(
         () => isLoading.value
             ? Center(child: CircularProgressIndicator())
@@ -61,27 +60,27 @@ class _ForgotPassword extends State<ForgotPassword> {
                             alignment: Alignment.bottomCenter,
                             margin: EdgeInsets.all(25),
                             child: ElevatedButton(
-                              onPressed: () async => {
-                                isLoading.value = true,
-                                if (await AuthService.to.forgot(_email.text))
-                                  {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content:
-                                            Text('E-mail enviado com sucesso!'),
-                                      ),
+                              onPressed: () async {
+                                isLoading.value = true;
+                                
+                                if (await AuthService.to.forgot(_email.text)) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content:
+                                          Text('E-mail enviado com sucesso!'),
                                     ),
-                                    Navigator.pop(context),
-                                  }
-                                else
-                                  {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text('E-mail inexistente :( '),
-                                      ),
+                                  );
+
+                                  Navigator.pop(context);
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('E-mail inexistente :( '),
                                     ),
-                                  },
-                                isLoading.value = false,
+                                  );
+                                }
+
+                                isLoading.value = false;
                               },
                               child: Text(
                                 'Enviar',
@@ -90,7 +89,7 @@ class _ForgotPassword extends State<ForgotPassword> {
                                 ),
                               ),
                               style: ElevatedButton.styleFrom(
-                                minimumSize: Size(350, 50),
+                                minimumSize: Size(400, 50),
                               ),
                             ),
                           ),

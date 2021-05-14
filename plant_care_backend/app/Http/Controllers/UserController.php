@@ -31,4 +31,9 @@ class UserController extends Controller {
 
         return response(null, 200);
     }
+
+    public function destroy(Request $request) {
+        User::destroy($request->user()->id);
+        return response(null, 200);
+    }
 }

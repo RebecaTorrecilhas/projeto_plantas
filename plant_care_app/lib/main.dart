@@ -27,12 +27,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Gotham',
-        backgroundColor: Colors.green[50],
         visualDensity: VisualDensity.adaptivePlatformDensity,
         primarySwatch: Colors.green,
         brightness: Brightness.light,
       ),
       darkTheme: ThemeData(
+        fontFamily: 'Gotham',
         brightness: Brightness.dark,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         backgroundColor: Colors.grey,
@@ -41,7 +41,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.grey,
         dividerColor: Colors.black45,
         elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(primary: Colors.green),
+          style: ElevatedButton.styleFrom(primary: Colors.green, onPrimary: Colors.white), 
+          
         ),
       ),
       themeMode: ThemeMode.system,

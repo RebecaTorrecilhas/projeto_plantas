@@ -15,10 +15,10 @@ class UserController extends GetxController {
   @override
   onInit() {
     super.onInit();
-    getUser();
+
     ever(AuthService.to.token, (token) {
-      getUser();
       formKey.currentState.reset();
+      getUser();
     });
   }
 
@@ -35,8 +35,22 @@ class UserController extends GetxController {
 
   editUser() async {
     isLoading.value = true;
-    var result = await UserService.to.editUser(nome.text, email.text, senha.text);
+
+    var result =
+        await UserService.to.editUser(nome.text, email.text, senha.text);
+
     isLoading.value = false;
+
+    return result;
+  }
+
+  destroyUser() async {
+    isLoading.value = true;
+
+    var result = await UserService.to.destroyUser();
+
+    isLoading.value = false;
+
     return result;
   }
 }

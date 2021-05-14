@@ -44,5 +44,7 @@ class PlantController extends Controller {
     }
 
     public function destroy(Request $request, $id) {
+        Plant::destroy($id);
+        return response(null, 200);
     }
 }

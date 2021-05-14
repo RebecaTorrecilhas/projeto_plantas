@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:projeto_plantas/constants.dart';
 
 class AuthService extends GetxController {
+  var constants = Get.put(Constants());
   var userIsAuthenticated = false.obs;
   final token = ''.obs;
 
@@ -32,7 +34,7 @@ class AuthService extends GetxController {
   register(String nome, String email, String senha) async {
     try {
       var response = await http.post(
-        Uri.parse('http://192.168.1.14:8000/api/auth/register'),
+        Uri.parse('${constants.url}/auth/register'),
         headers: <String, String>{
           'Accept': 'application/json;',
           'Content-Type': 'application/json; charset=UTF-8',
@@ -45,7 +47,7 @@ class AuthService extends GetxController {
           },
         ),
       );
-      
+
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
 
@@ -64,7 +66,7 @@ class AuthService extends GetxController {
   login(String email, String senha) async {
     try {
       var response = await http.post(
-        Uri.parse('http://192.168.1.14:8000/api/auth/login'),
+        Uri.parse('${constants.url}/auth/login'),
         headers: <String, String>{
           'Accept': 'application/json;',
           'Content-Type': 'application/json; charset=UTF-8',
@@ -93,7 +95,7 @@ class AuthService extends GetxController {
   forgot(String email) async {
     try {
       var response = await http.post(
-        Uri.parse('http://192.168.1.14:8000/api/auth/forgot'),
+        Uri.parse('${constants.url}/auth/forgot'),
         headers: <String, String>{
           'Accept': 'application/json;',
           'Content-Type': 'application/json; charset=UTF-8',
@@ -115,10 +117,15 @@ class AuthService extends GetxController {
     }
   }
 
+  resetToken() {
+    setToken('');
+    userIsAuthenticated.value = false;
+  }
+
   logout() async {
     try {
       var response = await http.get(
-        Uri.parse('http://192.168.1.14:8000/api/auth/logout'),
+        Uri.parse('${constants.url}/auth/logout'),
         headers: <String, String>{
           'Accept': 'application/json;',
           'Content-Type': 'application/json; charset=UTF-8',
@@ -127,9 +134,8 @@ class AuthService extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        setToken('');
-        userIsAuthenticated.value = false;
-     }
+        resetToken();
+      }
     } catch (e) {
       print(e.message);
     }

@@ -1,4 +1,6 @@
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_plantas/controllers/plants_controller.dart';
 
 class PlantasView extends StatefulWidget {
   final planta;
@@ -9,6 +11,7 @@ class PlantasView extends StatefulWidget {
 }
 
 class _PlantasViewState extends State<PlantasView> {
+  var controller = Get.put(PlantsController());
   deletePlanta(BuildContext contextClass) {
     return showDialog(
         context: context,
@@ -25,7 +28,8 @@ class _PlantasViewState extends State<PlantasView> {
               ),
               TextButton(
                 child: Text('Sim'),
-                onPressed: () {
+                onPressed: () async {
+                  await controller.delete(widget.planta['id']);
                   Navigator.pop(context);
                   Navigator.of(contextClass).pop();
                 },

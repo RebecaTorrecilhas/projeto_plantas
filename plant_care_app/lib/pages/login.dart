@@ -76,20 +76,22 @@ class _LoginState extends State<Login> {
                           alignment: Alignment.bottomCenter,
                           margin: EdgeInsets.all(25),
                           child: ElevatedButton(
-                            onPressed: () async  => {
-                              if (_formKey.currentState.validate())
-                                {
-                                  isLoading.value = true,
-                                  if (!(await AuthService.to.login(_email.text, _senha.text))){
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content:
-                                            Text('Não foi possível realizar login.'),
-                                      ),
+                            onPressed: () async {
+                              if (_formKey.currentState.validate()) {
+                                isLoading.value = true;
+
+                                if (!(await AuthService.to
+                                    .login(_email.text, _senha.text))) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                          'Não foi possível realizar login.'),
                                     ),
-                                  },
-                                  isLoading.value = false  
+                                  );
                                 }
+
+                                isLoading.value = false;
+                              }
                             },
                             child: Text(
                               'Entrar',
@@ -108,7 +110,6 @@ class _LoginState extends State<Login> {
                             child: InkWell(
                               child: Text("Cadastrar-se",
                                   style: TextStyle(
-                                    color: Colors.black,
                                     decoration: TextDecoration.underline,
                                     fontSize: 18,
                                   )),
@@ -127,7 +128,6 @@ class _LoginState extends State<Login> {
                             child: InkWell(
                               child: Text("Esqueceu senha?",
                                   style: TextStyle(
-                                    color: Colors.black,
                                     decoration: TextDecoration.underline,
                                     fontSize: 18,
                                   )),

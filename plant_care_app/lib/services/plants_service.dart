@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:projeto_plantas/constants.dart';
 import 'package:projeto_plantas/services/auth_service.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,6 +10,7 @@ class PlantsService extends GetxController {
     super.onInit();
   }
 
+  var constants = Get.put(Constants());
   static PlantsService get to => Get.find<PlantsService>();
 
   getAll() async {
@@ -16,7 +18,7 @@ class PlantsService extends GetxController {
       var token = AuthService.to.token;
 
       var response = await http.get(
-        Uri.parse('http://192.168.1.14:8000/api/plant/all'),
+        Uri.parse('${constants.url}/plant/all'),
         headers: <String, String>{
           'Accept': 'application/json;',
           'Content-Type': 'application/json; charset=UTF-8',
@@ -39,7 +41,7 @@ class PlantsService extends GetxController {
       var token = AuthService.to.token;
 
       var response = await http.post(
-        Uri.parse('http://192.168.1.14:8000/api/plant'),
+        Uri.parse('${constants.url}/plant'),
         headers: <String, String>{
           'Accept': 'application/json;',
           'Content-Type': 'application/json; charset=UTF-8',
@@ -68,5 +70,27 @@ class PlantsService extends GetxController {
       print(e.message);
     }
   }
-}
 
+  delete(id) async {
+    try {
+      var token = AuthService.to.token;
+
+      var response = await http.delete(
+        Uri.parse('${constants.url}/plant/$id'),
+        headers: <String, String>{
+          'Accept': 'application/json;',
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print(e.message);
+    }
+  }
+}

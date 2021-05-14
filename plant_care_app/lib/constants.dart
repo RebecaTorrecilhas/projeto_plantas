@@ -52,5 +52,5 @@ class Constants {
         'images/050-botanic.png',
       ];
 
-  var url = 'http://192.168.1.14/api';
+  var url = 'http://192.168.1.14:8000/api';
 }

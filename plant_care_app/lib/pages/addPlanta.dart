@@ -28,9 +28,11 @@ class _AddPlantaState extends State<AddPlanta> {
           ),
           onPressed: () {
             controller.icon.text = imagem;
+
             setState(() {
               icone = imagem;
             });
+
             Get.back();
           },
         ),
@@ -140,29 +142,26 @@ class _AddPlantaState extends State<AddPlanta> {
                       alignment: Alignment.bottomCenter,
                       margin: EdgeInsets.all(25),
                       child: ElevatedButton(
-                        onPressed: () async => {
-                          if (controller.formKey.currentState.validate())
-                            {
-                              if (await controller.add())
-                                {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                          'Planta adicionada com sucesso!'),
-                                    ),
-                                  ),
-                                  Navigator.pop(context)
-                                }
-                              else
-                                {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                          'Não foi possível adicionar a planta.'),
-                                    ),
-                                  ),
-                                }
+                        onPressed: () async {
+                          if (controller.formKey.currentState.validate()) {
+                            if (await controller.add()) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content:
+                                      Text('Planta adicionada com sucesso!'),
+                                ),
+                              );
+
+                              Navigator.pop(context);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                      'Não foi possível adicionar a planta.'),
+                                ),
+                              );
                             }
+                          }
                         },
                         child: Text(
                           'Salvar',

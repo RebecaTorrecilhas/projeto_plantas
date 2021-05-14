@@ -23,7 +23,6 @@ class _Register extends State<Register> {
       appBar: AppBar(
         title: Text('Cadastrar'),
       ),
-      backgroundColor: Colors.green[50],
       body: Obx(
         () => isLoading.value
             ? Center(
@@ -133,27 +132,25 @@ class _Register extends State<Register> {
                               alignment: Alignment.bottomCenter,
                               margin: EdgeInsets.all(25),
                               child: ElevatedButton(
-                                onPressed: () async => {
-                                  if (_formKey.currentState.validate())
-                                    {
-                                      isLoading.value = true,
-                                      if (await AuthService.to.register(
-                                          _nome.text, _email.text, _senha.text))
-                                        {
-                                          Navigator.pop(context),
-                                        }
-                                      else
-                                        {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                  'Não foi possível cadastrar.'),
-                                            ),
-                                          ),
-                                        },
-                                      isLoading.value = false,
+                                onPressed: () async {
+                                  if (_formKey.currentState.validate()) {
+                                    isLoading.value = true;
+
+                                    if (await AuthService.to.register(
+                                        _nome.text, _email.text, _senha.text)) {
+                                      Navigator.pop(context);
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                              'Não foi possível cadastrar.'),
+                                        ),
+                                      );
                                     }
+
+                                    isLoading.value = false;
+                                  }
                                 },
                                 child: Text(
                                   'Cadastrar',
@@ -162,7 +159,7 @@ class _Register extends State<Register> {
                                   ),
                                 ),
                                 style: ElevatedButton.styleFrom(
-                                  minimumSize: Size(350, 50),
+                                  minimumSize: Size(400, 50),
                                 ),
                               )),
                         ]),

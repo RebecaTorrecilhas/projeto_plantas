@@ -33,15 +33,15 @@ class _PlantasListState extends State<PlantasList> {
               child: ListTile(
                   leading: Icon(Icons.edit),
                   title: Text('Editar conta'),
-                  onTap: () => {
-                        Navigator.pop(context),
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EditUser(),
-                          ),
-                        ),
-                      }),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditUser(),
+                      ),
+                    );
+                  }),
             ),
             PopupMenuItem(
               child: ListTile(
@@ -83,7 +83,7 @@ class _PlantasListState extends State<PlantasList> {
                     itemCount: controller.plantas.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () => {
+                        onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -92,7 +92,7 @@ class _PlantasListState extends State<PlantasList> {
                                 planta: controller.plantas[index],
                               ),
                             ),
-                          )
+                          );
                         },
                         child: Container(
                           height: 130,

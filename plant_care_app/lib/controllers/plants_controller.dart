@@ -48,4 +48,17 @@ class PlantsController extends GetxController {
     
     return result;
   }
+
+  delete(id) async {
+    isLoading.value = true;
+
+    var result = await PlantsService.to.delete(id);
+    
+    getAll();
+
+    isLoading.value = false;
+    print(result);
+    return result;
+
+  }
 }
