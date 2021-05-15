@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:projeto_plantas/controllers/plants_controller.dart';
+import '../controllers/plants_controller.dart';
+import './editPlanta.dart';
 
 class PlantasView extends StatefulWidget {
   final planta;
@@ -12,6 +13,7 @@ class PlantasView extends StatefulWidget {
 
 class _PlantasViewState extends State<PlantasView> {
   var controller = Get.put(PlantsController());
+
   deletePlanta(BuildContext contextClass) {
     return showDialog(
         context: context,
@@ -24,12 +26,14 @@ class _PlantasViewState extends State<PlantasView> {
                 child: Text('Não'),
                 onPressed: () {
                   Navigator.pop(context);
+                  Navigator.pop(context);
                 },
               ),
               TextButton(
                 child: Text('Sim'),
                 onPressed: () async {
                   await controller.delete(widget.planta['id']);
+                  Navigator.pop(context);
                   Navigator.pop(context);
                   Navigator.of(contextClass).pop();
                 },
@@ -47,7 +51,34 @@ class _PlantasViewState extends State<PlantasView> {
           widget.planta['especie'],
         ),
         actions: [
-          IconButton(icon: Icon(Icons.delete), onPressed: () => deletePlanta(context)),
+          PopupMenuButton(
+            icon: Icon(Icons.more_vert),
+            itemBuilder: (_) => [
+              PopupMenuItem(
+                child: ListTile(
+                    leading: Icon(Icons.edit),
+                    title: Text('Editar'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditPlanta(planta: widget.planta),
+                        ),
+                      );
+                    }),
+              ),
+              PopupMenuItem(
+                child: ListTile(
+                  leading: Icon(Icons.delete),
+                  title: Text('Excluir'),
+                  onTap: () async {
+                    deletePlanta(context);
+                  },
+                ),
+              ),
+            ],
+          ),
         ],
       ),
       body: SingleChildScrollView(

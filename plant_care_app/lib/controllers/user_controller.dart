@@ -16,6 +16,8 @@ class UserController extends GetxController {
   onInit() {
     super.onInit();
 
+    getUser();
+
     ever(AuthService.to.token, (token) {
       formKey.currentState.reset();
       getUser();

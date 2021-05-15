@@ -41,10 +41,33 @@ class PlantController extends Controller {
     }
 
     public function edit(Request $request, $id) {
+        $request->validate([
+            'especie' => 'required|min:3',
+            'icon' => 'required'
+        ]);
+
+        $plant = Plant::find($id);
+
+        $plant->especie = $request->especie;
+        $plant->icon = $request->icon;
+        $plant->irrigar = $request->irrigar;
+        $plant->obs = $request->obs;
+
+        $plant->save();
+
+        return response(null, 200);
     }
 
     public function destroy(Request $request, $id) {
         Plant::destroy($id);
         return response(null, 200);
+    }
+
+    public function addImagem(Request $request, $id) {
+        // to do
+    }
+
+    public function removeImagem(Request $request, $id) {
+        // to do
     }
 }

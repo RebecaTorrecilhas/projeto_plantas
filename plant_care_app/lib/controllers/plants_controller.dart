@@ -1,7 +1,5 @@
-import 'dart:collection';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:projeto_plantas/models/plant.dart';
 import '../services/plants_service.dart';
 import '../services/auth_service.dart';
 
@@ -18,8 +16,10 @@ class PlantsController extends GetxController {
 
   onInit() {
     super.onInit();
+
     getAll();
-    ever(AuthService.to.token , (token) {
+
+    ever(AuthService.to.token, (token) {
       getAll();
       formKey.currentState.reset();
     });
@@ -39,13 +39,27 @@ class PlantsController extends GetxController {
   add() async {
     isLoading.value = true;
 
-    var result = await PlantsService.to.add(especie.text, icon.text, irrigar.text, obs.text);
-    
+    var result = await PlantsService.to
+        .add(especie.text, icon.text, irrigar.text, obs.text);
+
     getAll();
     formKey.currentState.reset();
 
     isLoading.value = false;
-    
+
+    return result;
+  }
+
+  edit(id) async {
+    isLoading.value = true;
+
+    var result = await PlantsService.to
+        .edit(id, especie.text, icon.text, irrigar.text, obs.text);
+
+    getAll();
+
+    isLoading.value = false;
+
     return result;
   }
 
@@ -53,12 +67,11 @@ class PlantsController extends GetxController {
     isLoading.value = true;
 
     var result = await PlantsService.to.delete(id);
-    
+
     getAll();
 
     isLoading.value = false;
     print(result);
     return result;
-
   }
 }
