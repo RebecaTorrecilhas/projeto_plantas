@@ -1,8 +1,8 @@
-import 'dart:convert';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import '../constants.dart';
 import '../services/auth_service.dart';
+import 'package:get/get.dart';
+import '../constants.dart';
+import 'dart:convert';
 
 class PlantsService extends GetxController {
   @override

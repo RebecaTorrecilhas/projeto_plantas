@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:projeto_plantas/controllers/user_controller.dart';
-import 'package:projeto_plantas/services/auth_service.dart';
+import '../controllers/user_controller.dart';
+import '../services/auth_service.dart';
 
 class EditUser extends StatefulWidget {
   @override

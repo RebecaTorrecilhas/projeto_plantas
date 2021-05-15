@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:projeto_plantas/services/auth_service.dart';
-import 'addPlanta.dart';
-import 'plantasView.dart';
 import '../controllers/theme_controller.dart';
 import '../controllers/plants_controller.dart';
+import '../services/auth_service.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'plantasView.dart';
+import 'addPlanta.dart';
 import 'editUser.dart';
 
 class PlantasList extends StatefulWidget {

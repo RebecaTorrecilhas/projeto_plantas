@@ -1,7 +1,7 @@
-import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 import '../services/plants_service.dart';
 import '../services/auth_service.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class PlantsController extends GetxController {
   final especie = TextEditingController();

@@ -1,8 +1,8 @@
-import 'dart:convert';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:projeto_plantas/constants.dart';
+import 'package:get/get.dart';
+import '../constants.dart';
+import 'dart:convert';
 
 class AuthService extends GetxController {
   var constants = Get.put(Constants());

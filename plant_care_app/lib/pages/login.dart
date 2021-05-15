@@ -1,8 +1,8 @@
+import '../services/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:projeto_plantas/services/auth_service.dart';
+import 'package:get/get.dart';
 import 'forgotPassword.dart';
 import 'register.dart';
-import 'package:get/get.dart';
 
 class Login extends StatefulWidget {
   @override

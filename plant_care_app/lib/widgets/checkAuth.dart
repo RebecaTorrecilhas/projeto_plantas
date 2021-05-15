@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:projeto_plantas/pages/login.dart';
-import 'package:projeto_plantas/pages/plantasList.dart';
-import 'package:projeto_plantas/services/auth_service.dart';
+import 'package:flutter/material.dart';
+import '../services/auth_service.dart';
+import '../pages/plantasList.dart';
+import '../pages/login.dart';
 
 class CheckAuth extends StatelessWidget {
   @override

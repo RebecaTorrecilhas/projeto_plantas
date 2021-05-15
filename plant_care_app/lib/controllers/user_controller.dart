@@ -1,7 +1,7 @@
+import '../services/auth_service.dart';
+import '../services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:projeto_plantas/services/auth_service.dart';
-import 'package:projeto_plantas/services/user_service.dart';
 
 class UserController extends GetxController {
   final nome = TextEditingController();
