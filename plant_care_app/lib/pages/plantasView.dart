@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:image_picker/image_picker.dart';
 import '../controllers/plants_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +16,67 @@ class PlantasView extends StatefulWidget {
 
 class _PlantasViewState extends State<PlantasView> {
   var controller = Get.put(PlantsController());
+
+  File arquivo;
+  final picker = ImagePicker();
+
+  Future getFileFromCamera() async {
+    final file = await picker.getImage(source: ImageSource.camera);
+    if (file != null) {
+      await controller.addImagem(widget.planta['id'], file);
+    }
+  }
+
+  Future getFileFromGallery() async {
+    final file = await picker.getImage(source: ImageSource.gallery);
+
+    if (file != null) {
+      await controller.addImagem(widget.planta['id'], file);
+    }
+  }
+
+  opcaoFoto() {
+    List<SimpleDialogOption> items = [
+      SimpleDialogOption(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.only(top: 20),
+            child: Text(
+              'Camera',
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
+        ),
+        onPressed: () {
+          getFileFromCamera();
+          Get.back();
+        },
+      ),
+      SimpleDialogOption(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.only(top: 20),
+            child: Text(
+              'Galeria',
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
+        ),
+        onPressed: () {
+          getFileFromGallery();
+          Get.back();
+        },
+      )
+    ];
+
+    final SimpleDialog dialog = SimpleDialog(
+      children: items,
+      insetPadding: EdgeInsets.symmetric(
+          vertical: MediaQuery.of(context).size.height / 4),
+    );
+
+    showDialog(context: context, builder: (_) => dialog);
+  }
 
   deletePlanta(BuildContext contextClass) {
     return showDialog(
@@ -63,7 +127,8 @@ class _PlantasViewState extends State<PlantasView> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => EditPlanta(planta: widget.planta),
+                          builder: (context) =>
+                              EditPlanta(planta: widget.planta),
                         ),
                       );
                     }),
@@ -126,6 +191,11 @@ class _PlantasViewState extends State<PlantasView> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            opcaoFoto();
+          },
+          child: const Icon(Icons.camera_alt)),
     );
   }
 }

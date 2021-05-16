@@ -71,7 +71,17 @@ class PlantsController extends GetxController {
     getAll();
 
     isLoading.value = false;
-    print(result);
+
+    return result;
+  }
+
+  addImagem(id, file) async {
+    isLoading.value = true;
+
+    var result = await PlantsService.to.addImagem(id, file);
+
+    isLoading.value = false;
+
     return result;
   }
 }

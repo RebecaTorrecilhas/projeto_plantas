@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart' as dio;
 import 'package:http/http.dart' as http;
 import '../services/auth_service.dart';
 import 'package:get/get.dart';
@@ -71,7 +72,7 @@ class PlantsService extends GetxController {
     }
   }
 
- edit(int id, String especie, String icon, String irrigar, String obs) async {
+  edit(int id, String especie, String icon, String irrigar, String obs) async {
     try {
       var token = AuthService.to.token;
 
@@ -126,6 +127,39 @@ class PlantsService extends GetxController {
       }
     } catch (e) {
       print(e.message);
+    }
+  }
+
+  addImagem(id, file) async {
+    try {
+      var token = AuthService.to.token;
+
+      var arquivo = await dio.MultipartFile.fromFile(
+        file.path,
+        filename: file.path,
+      );
+
+      var formData = new dio.FormData();
+
+      formData.files.add(MapEntry('imagem', arquivo));
+
+      var response = await dio.Dio().post(
+        '${constants.url}/plant/imagem/$id',
+        data: formData,
+        options: dio.Options(headers: {
+          'Accept': 'application/json;',
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+          'Authorization': 'Bearer $token',
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print(e);
     }
   }
 }
