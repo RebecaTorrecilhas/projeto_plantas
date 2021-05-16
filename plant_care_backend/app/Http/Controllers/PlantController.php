@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Plant;
+use App\Models\PlantImagem;
 use Illuminate\Http\Request;
 
 class PlantController extends Controller {
 
     public function getAll(Request $request) {
-        $plants = Plant::where('user_id', $request->user()->id)->get();
+        $plants = Plant::with('imagens')->where('user_id', $request->user()->id)->get();
         return response()->json($plants);
     }
 
     public function get(Request $request, $id) {
-        $plant = Plant::where([
+        $plant = Plant::with('imagens')->where([
             'user_id' => $request->user()->id,
             'id' => $id
         ])->firstOrFail();
@@ -46,7 +47,7 @@ class PlantController extends Controller {
             'icon' => 'required'
         ]);
 
-        $plant = Plant::find($id);
+        $plant = Plant::where(['user_id' => $request->user()->id, 'id' => $id])->first();
 
         $plant->especie = $request->especie;
         $plant->icon = $request->icon;
@@ -59,15 +60,32 @@ class PlantController extends Controller {
     }
 
     public function destroy(Request $request, $id) {
-        Plant::destroy($id);
+        Plant::where(['user_id' => $request->user()->id, 'id' => $id])->delete();
         return response(null, 200);
     }
 
     public function addImagem(Request $request, $id) {
-        // to do
+        $request->validate([
+            'imagem' => 'required|image|mimes:jpg,bmp,png,jpeg',
+        ]);
+
+        $image = $request->file('imagem');
+        $name = time() . '.' . $image->getClientOriginalExtension();
+        $destinationPath = public_path('/images');
+        $image->move($destinationPath, $name);
+
+        $plant_image = new PlantImagem();
+
+        $plant_image->plant_id = $id;
+        $plant_image->name = $name;
+
+        $plant_image->save();
+
+        return response(null, 200);
     }
 
     public function removeImagem(Request $request, $id) {
-        // to do
+        PlantImagem::where('id', $id)->delete();
+        return response(null, 200);
     }
 }
