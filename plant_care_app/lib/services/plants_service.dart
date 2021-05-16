@@ -154,7 +154,7 @@ class PlantsService extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        return true;
+        return response.data;
       } else {
         return false;
       }

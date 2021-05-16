@@ -9,7 +9,7 @@ class AddPlanta extends StatefulWidget {
 }
 
 class _AddPlantaState extends State<AddPlanta> {
-  var icone = '';
+  var icone = 'images/038-botanic.png';
   var constants = Get.put(Constants());
   var controller = Get.put(PlantsController());
 
@@ -79,7 +79,7 @@ class _AddPlantaState extends State<AddPlanta> {
                                 vertical: 12.0, horizontal: 24.0),
                             child: Center(
                               child: Image.asset(
-                                icone != '' ? icone : 'images/038-botanic.png',
+                                icone,
                                 height: 100,
                               ),
                             ),

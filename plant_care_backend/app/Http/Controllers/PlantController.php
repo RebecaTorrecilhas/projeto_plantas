@@ -81,7 +81,7 @@ class PlantController extends Controller {
 
         $plant_image->save();
 
-        return response(null, 200);
+        return response()->json($plant_image);
     }
 
     public function removeImagem(Request $request, $id) {

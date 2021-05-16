@@ -1,9 +1,10 @@
 import 'dart:io';
-
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import '../controllers/plants_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../constants.dart';
 import './editPlanta.dart';
 
 class PlantasView extends StatefulWidget {
@@ -16,6 +17,7 @@ class PlantasView extends StatefulWidget {
 
 class _PlantasViewState extends State<PlantasView> {
   var controller = Get.put(PlantsController());
+  var constants = Get.put(Constants());
 
   File arquivo;
   final picker = ImagePicker();
@@ -23,7 +25,11 @@ class _PlantasViewState extends State<PlantasView> {
   Future getFileFromCamera() async {
     final file = await picker.getImage(source: ImageSource.camera);
     if (file != null) {
-      await controller.addImagem(widget.planta['id'], file);
+      var result = await controller.addImagem(widget.planta['id'], file);
+      
+      setState(() {
+        widget.planta['imagens'].insert(0, result);
+      });
     }
   }
 
@@ -31,7 +37,11 @@ class _PlantasViewState extends State<PlantasView> {
     final file = await picker.getImage(source: ImageSource.gallery);
 
     if (file != null) {
-      await controller.addImagem(widget.planta['id'], file);
+      var result = await controller.addImagem(widget.planta['id'], file);
+
+      setState(() {
+        widget.planta['imagens'].insert(0, result);
+      });
     }
   }
 
@@ -158,11 +168,13 @@ class _PlantasViewState extends State<PlantasView> {
             ),
             Padding(
               padding: EdgeInsets.all(20),
-              child: Text('Observações',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  )),
+              child: Text(
+                'Observações',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
             Padding(
               padding: EdgeInsets.all(0),
@@ -174,11 +186,13 @@ class _PlantasViewState extends State<PlantasView> {
             ),
             Padding(
               padding: EdgeInsets.all(20),
-              child: Text('Tempo de Irrigação',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  )),
+              child: Text(
+                'Tempo de Irrigação',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
             Padding(
               padding: EdgeInsets.all(0),
@@ -187,6 +201,58 @@ class _PlantasViewState extends State<PlantasView> {
                 textAlign: TextAlign.justify,
                 style: TextStyle(fontSize: 18),
               ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Text(
+                'Imagens',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(0),
+              child: (widget.planta['imagens'].length == 0)
+                  ? Text(
+                      'Você não adicionou imagem ainda :(',
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: widget.planta['imagens'].length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          width: 400,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.all(0),
+                                child: Text(
+                                  'Adicionada em: ${DateFormat('dd/MM/yyyy').format(DateTime.parse(widget.planta['imagens'][index]['created_at']))}',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  top: 10,
+                                  bottom: 20,
+                                ),
+                                child: Image.network(
+                                  '${constants.urlImage}/${widget.planta['imagens'][index]['name']}',
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
             ),
           ],
         ),

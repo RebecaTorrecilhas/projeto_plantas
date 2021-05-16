@@ -42,8 +42,13 @@ class PlantsController extends GetxController {
     var result = await PlantsService.to
         .add(especie.text, icon.text, irrigar.text, obs.text);
 
-    getAll();
-    formKey.currentState.reset();
+    await getAll();
+
+    if (result) {
+      especie.text = '';
+      obs.text = '';
+      irrigar.text = '';
+    }
 
     isLoading.value = false;
 
@@ -56,7 +61,7 @@ class PlantsController extends GetxController {
     var result = await PlantsService.to
         .edit(id, especie.text, icon.text, irrigar.text, obs.text);
 
-    getAll();
+    await getAll();
 
     isLoading.value = false;
 
@@ -68,7 +73,7 @@ class PlantsController extends GetxController {
 
     var result = await PlantsService.to.delete(id);
 
-    getAll();
+    await getAll();
 
     isLoading.value = false;
 
@@ -79,6 +84,8 @@ class PlantsController extends GetxController {
     isLoading.value = true;
 
     var result = await PlantsService.to.addImagem(id, file);
+
+    await getAll();
 
     isLoading.value = false;
 

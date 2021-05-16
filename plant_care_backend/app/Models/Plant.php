@@ -23,6 +23,6 @@ class Plant extends Model {
     }
 
     public function imagens() {
-        return $this->hasMany(PlantImagem::class, 'plant_id');
+        return $this->hasMany(PlantImagem::class, 'plant_id')->orderBy('created_at', 'desc');
     }
 }
