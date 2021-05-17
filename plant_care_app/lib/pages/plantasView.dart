@@ -26,7 +26,13 @@ class _PlantasViewState extends State<PlantasView> {
     final file = await picker.getImage(source: ImageSource.camera);
     if (file != null) {
       var result = await controller.addImagem(widget.planta['id'], file);
-      
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Imagem adicionada com sucesso.'),
+        ),
+      );
+
       setState(() {
         widget.planta['imagens'].insert(0, result);
       });
@@ -42,6 +48,12 @@ class _PlantasViewState extends State<PlantasView> {
       setState(() {
         widget.planta['imagens'].insert(0, result);
       });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Imagem adicionada com sucesso.'),
+        ),
+      );
     }
   }
 
@@ -107,6 +119,11 @@ class _PlantasViewState extends State<PlantasView> {
                 child: Text('Sim'),
                 onPressed: () async {
                   await controller.delete(widget.planta['id']);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Planta apagada com sucesso!'),
+                    ),
+                  );
                   Navigator.pop(context);
                   Navigator.pop(context);
                   Navigator.of(contextClass).pop();

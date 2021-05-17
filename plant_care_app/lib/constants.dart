@@ -52,7 +52,7 @@ class Constants {
         'images/050-botanic.png',
       ];
 
-  var urlImage = 'http://192.168.1.14:8000/images';
+  var urlImage = 'http://192.168.1.12:8000/images';
 
-  var url = 'http://192.168.1.14:8000/api';
+  var url = 'http://192.168.1.12:8000/api';
 }
