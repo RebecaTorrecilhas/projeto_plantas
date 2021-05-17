@@ -16,6 +16,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('/', [UserController::class, 'get']);
         Route::put('/', [UserController::class, 'edit']);
+        Route::delete('/', [UserController::class, 'destroy']);
     });
 
     Route::prefix('plant')->group(function () {
@@ -24,6 +25,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/',  [PlantController::class, 'add']);
         Route::put('/{id}', [PlantController::class, 'edit']);
         Route::delete('/{id}', [PlantController::class, 'destroy']);
+
+        Route::post('/imagem/{id}', [PlantController::class, 'addImagem']);
+        Route::delete('/imagem/{id}', [PlantController::class, 'removeImagem']);
     });
 
     Route::get('auth/logout', [AuthController::class, 'logout']);

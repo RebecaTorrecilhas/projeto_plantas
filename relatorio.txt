@@ -1,5 +1,17 @@
 Alunos: Andre e Rebeca
 
+Terceira parte do projeto
+
+Atividades desenvolvidas por Andre:
+- Editar planta
+- Adicionar imagens nas plantas
+
+Atividades desenviolvidas por Rebeca:
+- Estilizar view
+- Excluir planta
+- Excluir conta 
+
+--------------------------------------------------------------------------------
 Segunda parte do projeto:
 
 Atividades desenvolvidas por Andre:
@@ -37,13 +49,4 @@ Atividades desenviolvidas por Rebeca:
 Atividades em conjunto:
 - Escolha de fontes, paleta de cores e ícones 
 
-Funcionalidades faltantes:
-
-- Na tela de cadastro de planta (que está incompleta) falta:
-- Select para escolher o tempo de irrigação
-- select para escolher o ícone da planta 
-
-Implementações futuras:
-
-- Incluir foto da planta no cadastro (de modo opcional para o usuário)
 

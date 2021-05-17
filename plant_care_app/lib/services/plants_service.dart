@@ -1,7 +1,9 @@
-import 'dart:convert';
-import 'package:get/get.dart';
-import 'package:projeto_plantas/services/auth_service.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:http/http.dart' as http;
+import '../services/auth_service.dart';
+import 'package:get/get.dart';
+import '../constants.dart';
+import 'dart:convert';
 
 class PlantsService extends GetxController {
   @override
@@ -9,6 +11,7 @@ class PlantsService extends GetxController {
     super.onInit();
   }
 
+  var constants = Get.put(Constants());
   static PlantsService get to => Get.find<PlantsService>();
 
   getAll() async {
@@ -16,7 +19,7 @@ class PlantsService extends GetxController {
       var token = AuthService.to.token;
 
       var response = await http.get(
-        Uri.parse('http://192.168.1.14:8000/api/plant/all'),
+        Uri.parse('${constants.url}/plant/all'),
         headers: <String, String>{
           'Accept': 'application/json;',
           'Content-Type': 'application/json; charset=UTF-8',
@@ -39,7 +42,7 @@ class PlantsService extends GetxController {
       var token = AuthService.to.token;
 
       var response = await http.post(
-        Uri.parse('http://192.168.1.14:8000/api/plant'),
+        Uri.parse('${constants.url}/plant'),
         headers: <String, String>{
           'Accept': 'application/json;',
           'Content-Type': 'application/json; charset=UTF-8',
@@ -68,5 +71,95 @@ class PlantsService extends GetxController {
       print(e.message);
     }
   }
-}
 
+  edit(int id, String especie, String icon, String irrigar, String obs) async {
+    try {
+      var token = AuthService.to.token;
+
+      var response = await http.put(
+        Uri.parse('${constants.url}/plant/${id}'),
+        headers: <String, String>{
+          'Accept': 'application/json;',
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(
+          <String, String>{
+            "especie": especie,
+            "icon": icon,
+            "irrigar": irrigar,
+            "obs": obs,
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        if (response.body.isEmpty) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print(e.message);
+    }
+  }
+
+  delete(id) async {
+    try {
+      var token = AuthService.to.token;
+
+      var response = await http.delete(
+        Uri.parse('${constants.url}/plant/$id'),
+        headers: <String, String>{
+          'Accept': 'application/json;',
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print(e.message);
+    }
+  }
+
+  addImagem(id, file) async {
+    try {
+      var token = AuthService.to.token;
+
+      var arquivo = await dio.MultipartFile.fromFile(
+        file.path,
+        filename: file.path,
+      );
+
+      var formData = new dio.FormData();
+
+      formData.files.add(MapEntry('imagem', arquivo));
+
+      var response = await dio.Dio().post(
+        '${constants.url}/plant/imagem/$id',
+        data: formData,
+        options: dio.Options(headers: {
+          'Accept': 'application/json;',
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+          'Authorization': 'Bearer $token',
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        return response.data;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+}

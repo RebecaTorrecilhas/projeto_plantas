@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_plantas/constants.dart';
 import 'package:get/get.dart';
 import '../controllers/plants_controller.dart';
+import '../constants.dart';
 
-class AddPlanta extends StatefulWidget {
+class EditPlanta extends StatefulWidget {
+  final planta;
+
+  EditPlanta({this.planta}) : super();
+
   @override
-  _AddPlantaState createState() => _AddPlantaState();
+  _EditPlantaState createState() => _EditPlantaState();
 }
 
-class _AddPlantaState extends State<AddPlanta> {
-  var icone = 'images/038-botanic.png';
+class _EditPlantaState extends State<EditPlanta> {
+  var first = true;
+  var icone = '';
   var constants = Get.put(Constants());
   var controller = Get.put(PlantsController());
 
@@ -50,9 +55,21 @@ class _AddPlantaState extends State<AddPlanta> {
 
   @override
   Widget build(BuildContext context) {
+    if (first) {
+      controller.especie.text = widget.planta['especie'];
+      controller.irrigar.text = widget.planta['irrigar'];
+      controller.obs.text = widget.planta['obs'];
+      controller.icon.text = widget.planta['icon'];
+
+      setState(() {
+        icone = widget.planta['icon'];
+        first = false;
+      });
+    }
+
     return Scaffold(
         appBar: AppBar(
-          title: Text('Adicionar Planta'),
+          title: Text('Editar Planta'),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -79,7 +96,7 @@ class _AddPlantaState extends State<AddPlanta> {
                                 vertical: 12.0, horizontal: 24.0),
                             child: Center(
                               child: Image.asset(
-                                icone,
+                                icone != '' ? icone : 'images/038-botanic.png',
                                 height: 100,
                               ),
                             ),
@@ -144,27 +161,27 @@ class _AddPlantaState extends State<AddPlanta> {
                       child: ElevatedButton(
                         onPressed: () async {
                           if (controller.formKey.currentState.validate()) {
-                            if (await controller.add()) {
+                            if (await controller.edit(widget.planta['id'])) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content:
-                                      Text('Planta adicionada com sucesso!'),
+                                  content: Text('Planta editada com sucesso!'),
                                 ),
                               );
 
                               Navigator.pop(context);
+                              Navigator.pop(context);
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text(
-                                      'Não foi possível adicionar a planta.'),
+                                  content:
+                                      Text('Não foi possível editar a planta.'),
                                 ),
                               );
                             }
                           }
                         },
                         child: Text(
-                          'Salvar',
+                          'Atualizar',
                           style: TextStyle(
                             fontSize: 20,
                           ),

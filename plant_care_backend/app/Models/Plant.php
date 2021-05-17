@@ -21,4 +21,8 @@ class Plant extends Model {
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function imagens() {
+        return $this->hasMany(PlantImagem::class, 'plant_id')->orderBy('created_at', 'desc');
+    }
 }

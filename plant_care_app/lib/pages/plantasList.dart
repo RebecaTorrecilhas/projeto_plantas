@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:projeto_plantas/services/auth_service.dart';
-import 'addPlanta.dart';
-import 'plantasView.dart';
 import '../controllers/theme_controller.dart';
 import '../controllers/plants_controller.dart';
+import '../services/auth_service.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'plantasView.dart';
+import 'addPlanta.dart';
 import 'editUser.dart';
 
 class PlantasList extends StatefulWidget {
@@ -33,15 +33,15 @@ class _PlantasListState extends State<PlantasList> {
               child: ListTile(
                   leading: Icon(Icons.edit),
                   title: Text('Editar conta'),
-                  onTap: () => {
-                        Navigator.pop(context),
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EditUser(),
-                          ),
-                        ),
-                      }),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditUser(),
+                      ),
+                    );
+                  }),
             ),
             PopupMenuItem(
               child: ListTile(
@@ -83,7 +83,7 @@ class _PlantasListState extends State<PlantasList> {
                     itemCount: controller.plantas.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () => {
+                        onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -92,7 +92,7 @@ class _PlantasListState extends State<PlantasList> {
                                 planta: controller.plantas[index],
                               ),
                             ),
-                          )
+                          );
                         },
                         child: Container(
                           height: 130,

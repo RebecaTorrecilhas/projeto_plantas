@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:projeto_plantas/services/user_service.dart';
-import 'package:projeto_plantas/widgets/checkAuth.dart';
 import 'controllers/theme_controller.dart';
+import 'package:flutter/material.dart';
+import 'services/plants_service.dart';
 import 'services/auth_service.dart';
 import 'services/user_service.dart';
-import 'services/plants_service.dart';
+import 'widgets/checkAuth.dart';
+import 'package:get/get.dart';
 
 void main() {
   Get.lazyPut<ThemeController>(() => ThemeController());
@@ -27,12 +26,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Gotham',
-        backgroundColor: Colors.green[50],
         visualDensity: VisualDensity.adaptivePlatformDensity,
         primarySwatch: Colors.green,
         brightness: Brightness.light,
       ),
       darkTheme: ThemeData(
+        fontFamily: 'Gotham',
         brightness: Brightness.dark,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         backgroundColor: Colors.grey,
@@ -41,7 +40,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.grey,
         dividerColor: Colors.black45,
         elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(primary: Colors.green),
+          style: ElevatedButton.styleFrom(primary: Colors.green, onPrimary: Colors.white), 
+          
         ),
       ),
       themeMode: ThemeMode.system,

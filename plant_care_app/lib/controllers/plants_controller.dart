@@ -1,9 +1,7 @@
-import 'dart:collection';
-import 'package:get/get.dart';
-import 'package:flutter/material.dart';
-import 'package:projeto_plantas/models/plant.dart';
 import '../services/plants_service.dart';
 import '../services/auth_service.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class PlantsController extends GetxController {
   final especie = TextEditingController();
@@ -18,8 +16,10 @@ class PlantsController extends GetxController {
 
   onInit() {
     super.onInit();
+
     getAll();
-    ever(AuthService.to.token , (token) {
+
+    ever(AuthService.to.token, (token) {
       getAll();
       formKey.currentState.reset();
     });
@@ -39,13 +39,56 @@ class PlantsController extends GetxController {
   add() async {
     isLoading.value = true;
 
-    var result = await PlantsService.to.add(especie.text, icon.text, irrigar.text, obs.text);
-    
-    getAll();
-    formKey.currentState.reset();
+    var result = await PlantsService.to
+        .add(especie.text, icon.text, irrigar.text, obs.text);
+
+    await getAll();
+
+    if (result) {
+      especie.text = '';
+      obs.text = '';
+      irrigar.text = '';
+    }
 
     isLoading.value = false;
-    
+
+    return result;
+  }
+
+  edit(id) async {
+    isLoading.value = true;
+
+    var result = await PlantsService.to
+        .edit(id, especie.text, icon.text, irrigar.text, obs.text);
+
+    await getAll();
+
+    isLoading.value = false;
+
+    return result;
+  }
+
+  delete(id) async {
+    isLoading.value = true;
+
+    var result = await PlantsService.to.delete(id);
+
+    await getAll();
+
+    isLoading.value = false;
+
+    return result;
+  }
+
+  addImagem(id, file) async {
+    isLoading.value = true;
+
+    var result = await PlantsService.to.addImagem(id, file);
+
+    await getAll();
+
+    isLoading.value = false;
+
     return result;
   }
 }

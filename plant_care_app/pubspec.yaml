@@ -12,12 +12,15 @@ dependencies:
   flutter:
     sdk: flutter
   select_form_field: "^2.0.0"
+  image_picker: ^0.7.4
 
   get:
-  http: 
+  http:
+  dio:
   provider: ^4.3.3
   shared_preferences: ^2.0.5
-
+  intl:
+  
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
